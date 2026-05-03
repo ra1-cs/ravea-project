@@ -1,11 +1,36 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import ProductCard from '../components/ProductCard'
-import { products } from '../data/products'
+
 
 function Home() {
-  const heroProducts = products.slice(0, 3)
-  const featuredProducts = products.slice(4, 10)
+  const [products, setProducts] = useState([])
+
+useEffect(() => {
+  fetch('http://localhost:5023/api/products')
+    .then((res) => res.json())
+    .then((data) => setProducts(data))
+    .catch((error) => console.error('Error loading home products:', error))
+}, [])
+
+const makeupProduct = products.find(p => p.category === "Makeup")
+const skincareProduct = products.find(p => p.category === "Skincare")
+const toolsProduct = products.find(p => p.category === "Tools")
+
+
+const heroProducts = [makeupProduct, skincareProduct, toolsProduct].filter(Boolean)
+const hero = [makeupProduct, skincareProduct, toolsProduct].filter(Boolean)
+
+const featuredProducts = products.slice(33, 42)
+if (products.length === 0) {
+  return (
+    <div className="home-luxury">
+      <Navbar />
+      <p>Loading products...</p>
+    </div>
+  )
+}
 
   return (
     <div className="home-luxury">
@@ -27,15 +52,19 @@ function Home() {
         </div>
 
         <div className="editorial-gallery">
-          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80" />
-          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=80" />
-          <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80" />
-        </div>
+  {heroProducts.map((product) => (
+    <img
+      key={product.id}
+      src={product.imageUrl}
+      alt={product.name}
+    />
+  ))}
+</div>
       </section>
 
       <section className="signature-strip">
         <div>
-          <strong>48+</strong>
+          <strong>150+</strong>
           <span>Curated Products</span>
         </div>
         <div>
@@ -49,18 +78,15 @@ function Home() {
       </section>
 
       <section className="collection-panels">
-        <Link to="/products" className="panel makeup-panel">
-          <span>Makeup</span>
+<Link to="/products?category=Makeup" className="panel makeup-panel">          <span>Makeup</span>
           <h2>Color that speaks luxury.</h2>
         </Link>
 
-        <Link to="/products" className="panel skincare-panel">
-          <span>Skincare</span>
+<Link to="/products?category=Skincare" className="panel skincare-panel">          <span>Skincare</span>
           <h2>Care designed around your skin.</h2>
         </Link>
 
-        <Link to="/products" className="panel tools-panel">
-          <span>Tools</span>
+<Link to="/products?category=Tools" className="panel tools-panel">          <span>Tools</span>
           <h2>Rituals made refined.</h2>
         </Link>
       </section>
@@ -76,9 +102,9 @@ function Home() {
         </div>
 
         <div className="spotlight-products">
-          {heroProducts.map((product) => (
+          {hero.map((product) => (
             <div className="mini-product" key={product.id}>
-              <img src={product.image} />
+              <img src={product.imageUrl} />
               <div>
                 <span>{product.category}</span>
                 <h3>{product.name}</h3>
@@ -103,7 +129,7 @@ function Home() {
         </div>
 
         <div className="center-action">
-          <Link to="/products" className="outline-btn big">View All 48 Products</Link>
+          <Link to="/products" className="outline-btn big">View Full Collection</Link>
         </div>
       </section>
     </div>

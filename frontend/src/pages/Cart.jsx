@@ -46,7 +46,7 @@ function Cart() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.08 }}
                 >
-                  <img src={item.image} alt={item.name} />
+                  <img src={item.imageUrl || item.image} alt={item.name} />
 
                   <div className="cart-info">
                     <span>{item.category}</span>

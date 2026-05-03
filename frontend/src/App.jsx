@@ -11,12 +11,14 @@ import Login from './pages/login'
 import Register from './pages/Register'
 import Recommendations from './pages/Recommendations'
 import './App.css'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <AppContent />
         </BrowserRouter>
       </CartProvider>

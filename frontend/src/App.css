@@ -1284,15 +1284,15 @@ button {
 }
 
 .makeup-panel {
-  background: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1200&q=80') center/cover;
+  background: url('/images/products/39.webp') center/cover;
 }
 
 .skincare-panel {
-  background: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80') center/cover;
+  background: url('/images/products/79.webp') center/cover;
 }
 
 .tools-panel {
-  background: url('https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=1200&q=80') center/cover;
+  background: url('/images/products/164.webp') center/cover;
 }
 
 .spotlight-section {
@@ -1524,4 +1524,104 @@ button {
 .outline-btn:hover,
 .ghost-btn:hover {
   transform: translateY(-3px);
+}
+
+.shop-controls {
+  padding: 20px 72px 36px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.shop-controls input {
+  width: 100%;
+  padding: 18px 22px;
+  border-radius: 999px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 18px 45px rgba(96, 50, 61, 0.08);
+  font-weight: 700;
+}
+
+.sort-group,
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sort-group span {
+  display: flex;
+  align-items: center;
+  color: #8c4a5a;
+  font-weight: 900;
+  margin-right: 4px;
+}
+
+.sort-group button,
+.filters button {
+  border: none;
+  padding: 13px 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #7b5962;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(96, 50, 61, 0.08);
+  transition: 0.25s ease;
+}
+
+.sort-group button:hover,
+.filters button:hover {
+  transform: translateY(-3px);
+  background: #fff1f4;
+}
+
+.sort-group button.active,
+.filters button.active {
+  background: #23191b;
+  color: white;
+  box-shadow: 0 18px 45px rgba(35, 25, 27, 0.22);
+}
+
+.pagination {
+  margin: 60px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.pagination button {
+  border: none;
+  padding: 15px 30px;
+  border-radius: 999px;
+  background: #23191b;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 18px 45px rgba(35, 25, 27, 0.22);
+  transition: 0.25s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  background: #4a3037;
+}
+
+.pagination button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.pagination span {
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: white;
+  color: #8c4a5a;
+  font-weight: 900;
+  box-shadow: 0 12px 35px rgba(96, 50, 61, 0.1);
 }
