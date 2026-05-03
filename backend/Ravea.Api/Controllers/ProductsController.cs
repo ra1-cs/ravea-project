@@ -16,18 +16,26 @@ namespace Ravea.Api.Controllers
             _context = context;
         }
 
-       [HttpGet("{id}")]
-public async Task<IActionResult> GetProductById(int id)
-{
-    var product = await _context.Products.FindAsync(id);
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
+        {
+            var products = await _context.Products.ToListAsync();
+            return Ok(products);
+        }
 
-    if (product == null)
-    {
-        return NotFound();
-    }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
 
-    return Ok(product);
-}
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProduct(Product product)
         {

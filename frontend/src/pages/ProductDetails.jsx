@@ -1,14 +1,54 @@
 import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import ProductCard from '../components/ProductCard'
-import { products } from '../data/products'
 import { useCart } from '../context/useCart'
 
 function ProductDetails() {
   const { id } = useParams()
   const { addToCart } = useCart()
-  const product = products.find((item) => item.id === Number(id))
+  const [product, setProduct] = useState(null)
+  const [relatedProducts, setRelatedProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadProduct() {
+      try {
+        const productResponse = await fetch(`http://localhost:5023/api/products/${id}`)
+        const productData = await productResponse.json()
+
+        const productsResponse = await fetch('http://localhost:5023/api/products')
+        const allProducts = await productsResponse.json()
+
+        setProduct(productData)
+        setRelatedProducts(
+          allProducts
+            .filter((item) => item.category === productData.category && item.id !== productData.id)
+            .slice(0, 3)
+        )
+      } catch (error) {
+        console.error('Error loading product details:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProduct()
+  }, [id])
+
+  if (loading) {
+    return (
+      <div className="app">
+        <Navbar />
+        <section className="details-page">
+          <div className="details-content">
+            <h1>Loading product...</h1>
+          </div>
+        </section>
+      </div>
+    )
+  }
 
   if (!product) {
     return (
@@ -24,10 +64,6 @@ function ProductDetails() {
       </div>
     )
   }
-
-  const relatedProducts = products
-    .filter((item) => item.category === product.category && item.id !== product.id)
-    .slice(0, 3)
 
   return (
     <div className="app">
@@ -45,7 +81,7 @@ function ProductDetails() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <img src={product.image} alt={product.name} />
+          <img src={product.imageUrl || product.image} alt={product.name} />
         </motion.div>
 
         <motion.div
@@ -65,7 +101,7 @@ function ProductDetails() {
             </div>
             <div>
               <small>Skin tone</small>
-              <strong>{product.skinTone}</strong>
+              <strong>{product.tone || product.skinTone}</strong>
             </div>
             <div>
               <small>Collection</small>
