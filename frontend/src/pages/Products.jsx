@@ -1,12 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import ProductCard from '../components/ProductCard'
-import { products } from '../data/products'
 import { motion } from 'framer-motion'
 
 function Products() {
+  const [products, setProducts] = useState([])
   const [filter, setFilter] = useState('All')
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('http://localhost:5023/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data)
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error('Error loading products:', error)
+        setLoading(false)
+      })
+  }, [])
 
   const filteredProducts = products.filter((p) => {
     const matchCategory = filter === 'All' || p.category === filter
@@ -36,7 +50,7 @@ function Products() {
         />
 
         <div className="filters">
-          {['All', 'Makeup', 'Skincare', 'Beauty Tools'].map((cat) => (
+          {['All', 'Makeup', 'Skincare', 'Tools'].map((cat) => (
             <button
               key={cat}
               className={filter === cat ? 'active' : ''}
@@ -48,11 +62,15 @@ function Products() {
         </div>
       </div>
 
-      <div className="premium-products-grid">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {loading ? (
+        <p>Loading products...</p>
+      ) : (
+        <div className="premium-products-grid">
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

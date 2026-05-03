@@ -14,7 +14,7 @@ function ProductCard({ product }) {
       whileHover={{ y: -10, scale: 1.02 }}
     >
       <Link to={`/products/${product.id}`} className="product-image-wrap">
-        <img src={product.image} alt={product.name} />
+        <img src={product.imageUrl || product.image} alt={product.name} />
         <span className="product-category">{product.category}</span>
       </Link>
 
@@ -24,7 +24,7 @@ function ProductCard({ product }) {
 
         <div className="product-meta">
           <span>{product.skinType}</span>
-          <span>{product.skinTone}</span>
+          <span>{product.tone || product.skinTone}</span>
         </div>
 
         <div className="product-footer">
