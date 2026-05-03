@@ -33,4 +33,4 @@ The platform also provides simple product recommendations based on the user's sk
 ---
 
 ### Project Phase
-This repository is currently in **Phase I (Planning & Setup)**.
+This repository is currently in **Phase 2**.
