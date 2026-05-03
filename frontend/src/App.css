@@ -1548,44 +1548,47 @@ button {
 .filters {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
+}
+
+.sort-group {
+  margin-top: 6px;
 }
 
 .sort-group span {
-  display: flex;
-  align-items: center;
   color: #8c4a5a;
-  font-weight: 900;
-  margin-right: 4px;
+  font-weight: 800;
+  margin-right: 6px;
 }
 
 .sort-group button,
 .filters button {
-  border: none;
-  padding: 13px 20px;
+  border: 1px solid rgba(140, 74, 90, 0.12);
+  padding: 11px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.78);
   color: #7b5962;
-  font-weight: 900;
+  font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 12px 30px rgba(96, 50, 61, 0.08);
-  transition: 0.25s ease;
+  box-shadow: 0 8px 22px rgba(96, 50, 61, 0.07);
+  transition: 0.22s ease;
 }
 
 .sort-group button:hover,
 .filters button:hover {
-  transform: translateY(-3px);
   background: #fff1f4;
+  transform: translateY(-2px);
 }
 
 .sort-group button.active,
 .filters button.active {
-  background: #23191b;
-  color: white;
-  box-shadow: 0 18px 45px rgba(35, 25, 27, 0.22);
+  background: #f4c7d0;
+  color: #23191b;
+  border-color: #f4c7d0;
+  box-shadow: 0 12px 28px rgba(180, 91, 112, 0.18);
 }
-
 .pagination {
   margin: 60px auto 0;
   display: flex;
