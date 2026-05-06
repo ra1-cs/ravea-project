@@ -21,17 +21,13 @@ function Navbar() {
       </div>
 
       <div className="nav-actions">
-        {currentUser ? (
+       {currentUser ? (
   <>
-    <Link to="/profile" className="profile-pill">
-      <span className="profile-avatar">
-        {currentUser.name.charAt(0).toUpperCase()}
-      </span>
-
-      <span>Hello, {currentUser.name}</span>
+    <Link to="/profile" className="ghost-btn">
+      Profile
     </Link>
 
-    <button type="button" className="logout-btn" onClick={logout}>
+    <button type="button" className="primary-btn" onClick={logout}>
       Logout
     </button>
   </>

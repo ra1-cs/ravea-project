@@ -3,24 +3,13 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { useAuth } from '../context/useAuth'
 
-function Login() {
+function ForgotPassword() {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { forgotPassword } = useAuth()
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
-
+  const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
-
-  function handleChange(event) {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    })
-  }
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -28,7 +17,7 @@ function Login() {
     setLoading(true)
     setMessage('')
 
-    const result = await login(formData.email, formData.password)
+    const result = await forgotPassword(email)
 
     setLoading(false)
 
@@ -37,11 +26,14 @@ function Login() {
       return
     }
 
-    setMessage('Login successful.')
+    localStorage.setItem('raveaResetEmail', email)
+    localStorage.removeItem('raveaResetCode')
+
+    setMessage('A reset code has been sent to your email.')
 
     setTimeout(() => {
-      navigate('/')
-    }, 1000)
+      navigate('/reset-password')
+    }, 1500)
   }
 
   return (
@@ -50,38 +42,28 @@ function Login() {
 
       <section className="auth-page">
         <div className="auth-visual">
-          <span>Welcome Back</span>
+          <span>Password Recovery</span>
 
-          <h1>Continue your personalized beauty experience.</h1>
+          <h1>Recover your RAVÉA account.</h1>
 
           <p>
-            Login to manage your cart, view your profile, and receive beauty
-            recommendations made for your skin.
+            Enter your email address and we will send a verification code
+            to help you reset your password securely.
           </p>
         </div>
 
         <div className="auth-card">
-          <span>Login</span>
+          <span>Forgot Password</span>
 
-          <h2>Access RAVÉA</h2>
+          <h2>Get Reset Code</h2>
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <input
               type="email"
-              name="email"
               placeholder="Email address"
               required
-              value={formData.email}
-              onChange={handleChange}
-            />
-
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              value={formData.password}
-              onChange={handleChange}
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
 
             <button
@@ -89,11 +71,8 @@ function Login() {
               className="primary-btn big"
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? 'Sending code...' : 'Send Reset Code'}
             </button>
-            <Link to="/forgot-password" className="forgot-password-link">
-  Forgot password?
-</Link>
 
             {message && (
               <p className="auth-message">
@@ -103,9 +82,7 @@ function Login() {
           </form>
 
           <p className="auth-switch">
-            New to RAVÉA?
-            {' '}
-            <Link to="/register">Create account</Link>
+            Remember your password? <Link to="/login">Login</Link>
           </p>
         </div>
       </section>
@@ -113,4 +90,4 @@ function Login() {
   )
 }
 
-export default Login
+export default ForgotPassword
