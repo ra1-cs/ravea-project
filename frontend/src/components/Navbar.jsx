@@ -22,36 +22,30 @@ function Navbar() {
 
       <div className="nav-actions">
         {currentUser ? (
-          <>
-            <Link to="/profile" className="ghost-btn">
-              Profile
-            </Link>
+  <>
+    <Link to="/profile" className="profile-pill">
+      <span className="profile-avatar">
+        {currentUser.name.charAt(0).toUpperCase()}
+      </span>
 
-           <div className="nav-profile-preview">
-  <div className="nav-avatar">
-    {currentUser.name.charAt(0).toUpperCase()}
-  </div>
+      <span>Hello, {currentUser.name}</span>
+    </Link>
 
-  <span className="nav-username">
-    {currentUser.name}
-  </span>
-</div>
+    <button type="button" className="logout-btn" onClick={logout}>
+      Logout
+    </button>
+  </>
+) : (
+  <>
+    <Link to="/login" className="ghost-btn">
+      Login
+    </Link>
 
-            <button type="button" className="primary-btn" onClick={logout}>
-              Logout
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/login" className="ghost-btn">
-              Login
-            </Link>
-
-            <Link to="/register" className="primary-btn">
-              Create Account
-            </Link>
-          </>
-        )}
+    <Link to="/register" className="primary-btn">
+      Create Account
+    </Link>
+  </>
+)}
       </div>
     </nav>
   )
