@@ -12,5 +12,7 @@ namespace Ravea.Api.Models
         public string? SkinTone { get; set; }
 
         public ICollection<ProductRating> ProductRatings { get; set; } = new List<ProductRating>();
+        public string? ResetCode { get; set; }
+public DateTime? ResetCodeExpiresAt { get; set; }
     }
 }
