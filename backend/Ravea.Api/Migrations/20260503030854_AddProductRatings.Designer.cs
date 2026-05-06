@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ravea.Api.Data;
 
@@ -11,9 +12,11 @@ using Ravea.Api.Data;
 namespace Ravea.Api.Migrations
 {
     [DbContext(typeof(RaveaDbContext))]
-    partial class RaveaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260503030854_AddProductRatings")]
+    partial class AddProductRatings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,18 +82,13 @@ namespace Ravea.Api.Migrations
                     b.Property<int>("RatingValue")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("ProductId", "UserId")
-                        .IsUnique();
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductRatings");
                 });
@@ -115,18 +113,6 @@ namespace Ravea.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ResetCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetCodeExpiresAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SkinTone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkinType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -140,20 +126,7 @@ namespace Ravea.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ravea.Api.Models.User", "User")
-                        .WithMany("ProductRatings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Ravea.Api.Models.User", b =>
-                {
-                    b.Navigation("ProductRatings");
                 });
 #pragma warning restore 612, 618
         }

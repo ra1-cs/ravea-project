@@ -1284,15 +1284,15 @@ button {
 }
 
 .makeup-panel {
-  background: url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1200&q=80') center/cover;
+  background: url('/images/products/39.webp') center/cover;
 }
 
 .skincare-panel {
-  background: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80') center/cover;
+  background: url('/images/products/79.webp') center/cover;
 }
 
 .tools-panel {
-  background: url('https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=1200&q=80') center/cover;
+  background: url('/images/products/164.webp') center/cover;
 }
 
 .spotlight-section {
@@ -1524,4 +1524,306 @@ button {
 .outline-btn:hover,
 .ghost-btn:hover {
   transform: translateY(-3px);
+}
+
+.shop-controls {
+  padding: 20px 72px 36px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.shop-controls input {
+  width: 100%;
+  padding: 18px 22px;
+  border-radius: 999px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 18px 45px rgba(96, 50, 61, 0.08);
+  font-weight: 700;
+}
+
+.sort-group,
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sort-group {
+  margin-top: 6px;
+}
+
+.sort-group span {
+  color: #8c4a5a;
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+.sort-group button,
+.filters button {
+  border: 1px solid rgba(140, 74, 90, 0.12);
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: #7b5962;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(96, 50, 61, 0.07);
+  transition: 0.22s ease;
+}
+
+.sort-group button:hover,
+.filters button:hover {
+  background: #fff1f4;
+  transform: translateY(-2px);
+}
+
+.sort-group button.active,
+.filters button.active {
+  background: #f4c7d0;
+  color: #23191b;
+  border-color: #f4c7d0;
+  box-shadow: 0 12px 28px rgba(180, 91, 112, 0.18);
+}
+.pagination {
+  margin: 60px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.pagination button {
+  border: none;
+  padding: 15px 30px;
+  border-radius: 999px;
+  background: #23191b;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 18px 45px rgba(35, 25, 27, 0.22);
+  transition: 0.25s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  background: #4a3037;
+}
+
+.pagination button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.pagination span {
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: white;
+  color: #8c4a5a;
+  font-weight: 900;
+  box-shadow: 0 12px 35px rgba(96, 50, 61, 0.1);
+}
+
+.rating-box {
+  margin: 24px 0;
+  padding: 22px;
+  border-radius: 26px;
+  background: #fff1f4;
+}
+
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  color: #d8c5ca;
+  font-size: 22px;
+}
+
+.star.active {
+  color: #d99a38;
+}
+
+.user-rating small {
+  display: block;
+  color: #a85a6c;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.star-button {
+  border: none;
+  background: transparent;
+  color: #d8c5ca;
+  font-size: 30px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.star-button.active,
+.star-button:hover {
+  color: #d99a38;
+  transform: translateY(-2px);
+}
+
+.image-rating-box {
+  margin: 22px;
+  background: rgba(255, 241, 244, 0.95);
+  box-shadow: none;
+}
+
+.rating-message {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #8b4a5f;
+  font-weight: 600;
+}
+
+.profile-page {
+  padding: 90px 72px 120px;
+  min-height: calc(100vh - 86px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-card {
+  width: min(900px, 100%);
+  padding: 56px;
+  border-radius: 46px;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 34px 100px rgba(96, 50, 61, 0.16);
+  text-align: center;
+}
+
+.profile-avatar-large {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  background: #f4c7d0;
+  color: #110d0e;
+  display: grid;
+  place-items: center;
+  font-size: 38px;
+  font-weight: 900;
+  font-family: 'Playfair Display', serif;
+}
+
+.profile-card > span {
+  color: #b45b70;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.profile-card h1 {
+  margin: 14px 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 58px;
+}
+
+.profile-card p {
+  color: #725b62;
+  line-height: 1.7;
+  margin-bottom: 34px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin: 34px 0;
+}
+
+.profile-grid div {
+  padding: 20px;
+  border-radius: 24px;
+  background: #fff1f4;
+  text-align: left;
+}
+
+.profile-grid small {
+  display: block;
+  color: #a85a6c;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.profile-grid strong {
+  color: #23191b;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}x
+.profile-actions a {
+  text-decoration: none;
+}
+
+.profile-actions a:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  transition: 0.2s ease;
+}
+.profile-actions a,
+.profile-actions a:visited,
+.profile-actions a:hover,
+.profile-actions a:active {
+  text-decoration: none !important;
+}
+
+.profile-actions .primary-btn,
+.profile-actions .outline-btn {
+  text-decoration: none !important;
+}
+
+.auth-form select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #8c4a5a 50%),
+    linear-gradient(135deg, #8c4a5a 50%, transparent 50%);
+  background-position:
+    calc(100% - 24px) 50%,
+    calc(100% - 18px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.auth-message {
+  margin-top: 8px;
+  color: #8b4a5f;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.forgot-password-link {
+  text-align: center;
+  color: #b45b70;
+  font-weight: 900;
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
 }

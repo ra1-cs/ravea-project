@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ravea.Api.Data;
 
@@ -11,9 +12,11 @@ using Ravea.Api.Data;
 namespace Ravea.Api.Migrations
 {
     [DbContext(typeof(RaveaDbContext))]
-    partial class RaveaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260506195357_AddSkinProfileToUser")]
+    partial class AddSkinProfileToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,12 +117,6 @@ namespace Ravea.Api.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResetCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetCodeExpiresAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("SkinTone")
                         .HasColumnType("nvarchar(max)");

@@ -3,13 +3,14 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { useAuth } from '../context/useAuth'
 
-function Login() {
+function ResetPassword() {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { resetPassword } = useAuth()
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: localStorage.getItem('raveaResetEmail') || '',
+    resetCode: '',
+    newPassword: '',
   })
 
   const [message, setMessage] = useState('')
@@ -28,7 +29,11 @@ function Login() {
     setLoading(true)
     setMessage('')
 
-    const result = await login(formData.email, formData.password)
+    const result = await resetPassword(
+      formData.email,
+      formData.resetCode,
+      formData.newPassword
+    )
 
     setLoading(false)
 
@@ -37,11 +42,14 @@ function Login() {
       return
     }
 
-    setMessage('Login successful.')
+    localStorage.removeItem('raveaResetEmail')
+    localStorage.removeItem('raveaResetCode')
+
+    setMessage('Password updated successfully. You can login now.')
 
     setTimeout(() => {
-      navigate('/')
-    }, 1000)
+      navigate('/login')
+    }, 1500)
   }
 
   return (
@@ -50,20 +58,20 @@ function Login() {
 
       <section className="auth-page">
         <div className="auth-visual">
-          <span>Welcome Back</span>
+          <span>Secure Reset</span>
 
-          <h1>Continue your personalized beauty experience.</h1>
+          <h1>Create a new password.</h1>
 
           <p>
-            Login to manage your cart, view your profile, and receive beauty
-            recommendations made for your skin.
+            Enter the verification code and choose a new password for your
+            RAVÉA account.
           </p>
         </div>
 
         <div className="auth-card">
-          <span>Login</span>
+          <span>Reset Password</span>
 
-          <h2>Access RAVÉA</h2>
+          <h2>New Password</h2>
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <input
@@ -76,11 +84,20 @@ function Login() {
             />
 
             <input
-              type="password"
-              name="password"
-              placeholder="Password"
+              type="text"
+              name="resetCode"
+              placeholder="Verification code"
               required
-              value={formData.password}
+              value={formData.resetCode}
+              onChange={handleChange}
+            />
+
+            <input
+              type="password"
+              name="newPassword"
+              placeholder="New password"
+              required
+              value={formData.newPassword}
               onChange={handleChange}
             />
 
@@ -89,11 +106,8 @@ function Login() {
               className="primary-btn big"
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? 'Updating password...' : 'Reset Password'}
             </button>
-            <Link to="/forgot-password" className="forgot-password-link">
-  Forgot password?
-</Link>
 
             {message && (
               <p className="auth-message">
@@ -103,9 +117,9 @@ function Login() {
           </form>
 
           <p className="auth-switch">
-            New to RAVÉA?
+            Back to
             {' '}
-            <Link to="/register">Create account</Link>
+            <Link to="/login">Login</Link>
           </p>
         </div>
       </section>
@@ -113,4 +127,4 @@ function Login() {
   )
 }
 
-export default Login
+export default ResetPassword
