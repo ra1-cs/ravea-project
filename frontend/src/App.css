@@ -1628,3 +1628,93 @@ button {
   font-weight: 900;
   box-shadow: 0 12px 35px rgba(96, 50, 61, 0.1);
 }
+
+.rating-box {
+  margin: 24px 0;
+  padding: 22px;
+  border-radius: 26px;
+  background: #fff1f4;
+}
+
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  color: #d8c5ca;
+  font-size: 22px;
+}
+
+.star.active {
+  color: #d99a38;
+}
+
+.user-rating small {
+  display: block;
+  color: #a85a6c;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.star-button {
+  border: none;
+  background: transparent;
+  color: #d8c5ca;
+  font-size: 30px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.star-button.active,
+.star-button:hover {
+  color: #d99a38;
+  transform: translateY(-2px);
+}
+
+.image-rating-box {
+  margin: 22px;
+  background: rgba(255, 241, 244, 0.95);
+  box-shadow: none;
+}
+
+.rating-message {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #8b4a5f;
+  font-weight: 600;
+}
+
+.nav-profile-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f2c6d2, #d9a5b3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2d1b22;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.nav-username {
+  font-weight: 600;
+  color: white;
+  font-size: 0.95rem;
+}

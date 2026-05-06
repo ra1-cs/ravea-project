@@ -1,53 +1,68 @@
 import { useState } from 'react'
 import { AuthContext } from './auth-context'
 
+const API_URL = 'http://localhost:5023/api/auth'
+
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(() => {
-    const savedUser = localStorage.getItem('ravea_user')
+    const savedUser = localStorage.getItem('raveaUser')
     return savedUser ? JSON.parse(savedUser) : null
   })
 
-  function register(userData) {
-    const users = JSON.parse(localStorage.getItem('ravea_users')) || []
+  async function register(userData) {
+    try {
+      const response = await fetch(`${API_URL}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      })
 
-    const existingUser = users.find((user) => user.email === userData.email)
+      if (!response.ok) {
+        const message = await response.text()
+        return { success: false, message }
+      }
 
-    if (existingUser) {
-      return { success: false, message: 'Email already exists.' }
+      const user = await response.json()
+      localStorage.setItem('raveaUser', JSON.stringify(user))
+      setCurrentUser(user)
+
+      return { success: true, message: 'Account created successfully.' }
+    } catch (error) {
+      console.error('Register error:', error)
+      return { success: false, message: 'Server error while creating account.' }
     }
-
-    const newUser = {
-      id: Date.now(),
-      ...userData,
-    }
-
-    users.push(newUser)
-    localStorage.setItem('ravea_users', JSON.stringify(users))
-    localStorage.setItem('ravea_user', JSON.stringify(newUser))
-    setCurrentUser(newUser)
-
-    return { success: true, message: 'Account created successfully.' }
   }
 
-  function login(email, password) {
-    const users = JSON.parse(localStorage.getItem('ravea_users')) || []
+  async function login(email, password) {
+    try {
+      const response = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-    const user = users.find(
-      (item) => item.email === email && item.password === password
-    )
+      if (!response.ok) {
+        const message = await response.text()
+        return { success: false, message }
+      }
 
-    if (!user) {
-      return { success: false, message: 'Invalid email or password.' }
+      const user = await response.json()
+      localStorage.setItem('raveaUser', JSON.stringify(user))
+      setCurrentUser(user)
+
+      return { success: true, message: 'Login successful.' }
+    } catch (error) {
+      console.error('Login error:', error)
+      return { success: false, message: 'Server error while logging in.' }
     }
-
-    localStorage.setItem('ravea_user', JSON.stringify(user))
-    setCurrentUser(user)
-
-    return { success: true, message: 'Login successful.' }
   }
 
   function logout() {
-    localStorage.removeItem('ravea_user')
+    localStorage.removeItem('raveaUser')
     setCurrentUser(null)
   }
 

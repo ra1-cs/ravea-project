@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ravea.Api.Data;
 
@@ -11,9 +12,11 @@ using Ravea.Api.Data;
 namespace Ravea.Api.Migrations
 {
     [DbContext(typeof(RaveaDbContext))]
-    partial class RaveaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260506184820_AddUserToProductRating")]
+    partial class AddUserToProductRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,12 +116,6 @@ namespace Ravea.Api.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkinTone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkinType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
