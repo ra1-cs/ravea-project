@@ -7,9 +7,14 @@ namespace Ravea.Api.Data
     {
         public static void Initialize(RaveaDbContext context)
         {
-            context.Products.RemoveRange(context.Products);
-            context.SaveChanges();
-            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Products', RESEED, 0)");
+             context.OrderItems.RemoveRange(context.OrderItems);
+    context.SaveChanges();
+
+    // Puis supprimer les produits
+    context.Products.RemoveRange(context.Products);
+    context.SaveChanges();
+
+    context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Products', RESEED, 0)");
 
             var products = new List<Product>();
 

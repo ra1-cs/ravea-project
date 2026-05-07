@@ -105,14 +105,60 @@ async function resetPassword(email, resetCode, newPassword) {
     return { success: false, message: 'Server error while resetting password.' }
   }
 }
+async function updateProfile(userId, profileData) {
+  try {
+    const response = await fetch(`${API_URL}/users/${userId}/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(profileData),
+    })
 
+    if (!response.ok) {
+      const message = await response.text()
+      return { success: false, message }
+    }
+
+    const updatedUser = await response.json()
+
+    localStorage.setItem('raveaUser', JSON.stringify(updatedUser))
+    setCurrentUser(updatedUser)
+
+    return { success: true, message: 'Profile updated successfully.' }
+  } catch (error) {
+    console.error('Update profile error:', error)
+    return { success: false, message: 'Server error while updating profile.' }
+  }
+}
+
+async function deleteAccount(userId) {
+  try {
+    const response = await fetch(`${API_URL}/users/${userId}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      const message = await response.text()
+      return { success: false, message }
+    }
+
+    localStorage.removeItem('raveaUser')
+    setCurrentUser(null)
+
+    return { success: true, message: 'Account deleted successfully.' }
+  } catch (error) {
+    console.error('Delete account error:', error)
+    return { success: false, message: 'Server error while deleting account.' }
+  }
+}
   function logout() {
     localStorage.removeItem('raveaUser')
     setCurrentUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ currentUser, register, login, logout, forgotPassword, resetPassword }}>
+    <AuthContext.Provider value={{ currentUser, register, login, logout, forgotPassword, resetPassword, deleteAccount, updateProfile }}>
       {children}
     </AuthContext.Provider>
   )

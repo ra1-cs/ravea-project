@@ -15,6 +15,7 @@ function ProductDetails() {
   const [selectedRating, setSelectedRating] = useState(0)
   const [hoverRating, setHoverRating] = useState(0)
   const [ratingMessage, setRatingMessage] = useState('')
+  const [showImageModal, setShowImageModal] = useState(false)
 
   useEffect(() => {
     async function loadProduct() {
@@ -136,7 +137,12 @@ function ProductDetails() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <img src={product.imageUrl || product.image} alt={product.name} />
+          <img
+            src={product.imageUrl || product.image}
+            alt={product.name}
+            className="clickable-product-image"
+            onClick={() => setShowImageModal(true)}
+          />
 
           <div className="rating-box">
             <div className="rating-summary">
@@ -235,6 +241,24 @@ function ProductDetails() {
           ))}
         </div>
       </section>
+
+      {showImageModal && (
+        <div className="image-modal-overlay" onClick={() => setShowImageModal(false)}>
+          <div className="image-modal-content" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              className="image-modal-close"
+              onClick={() => setShowImageModal(false)}
+            >
+              ×
+            </button>
+
+            <img src={product.imageUrl || product.image} alt={product.name} />
+
+            <h3>{product.name}</h3>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

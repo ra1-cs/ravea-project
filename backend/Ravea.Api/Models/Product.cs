@@ -16,6 +16,10 @@ namespace Ravea.Api.Models
 
         public decimal Price { get; set; }
 
+
+
         public string ImageUrl { get; set; }
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }
