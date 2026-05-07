@@ -15,6 +15,8 @@ import ScrollToTop from './components/ScrollToTop'
 import Profile from './pages/Profile'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
+import Checkout from './pages/Checkout'
+import OrderConfirmation from './pages/OrderConfirmation'
 
 function App() {
   return (
@@ -47,6 +49,8 @@ function AppContent() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/reset-password" element={<ResetPassword />} />
+<Route path="/checkout" element={<Checkout />} />
+<Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
       </Routes>
     </>
   )

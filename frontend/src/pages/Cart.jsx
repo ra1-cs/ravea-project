@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import Navbar from '../components/Navbar'
 import { useCart } from '../context/useCart'
+import { Link } from 'react-router-dom'
 
 function Cart() {
   const {
@@ -76,7 +77,9 @@ function Cart() {
               <span>Order Summary</span>
               <h2>${cartTotal.toFixed(2)}</h2>
               <p>Taxes and shipping are calculated at checkout.</p>
-              <button className="primary-btn big">Continue to Checkout</button>
+              <Link to="/checkout" className="primary-btn big">
+  Continue to Checkout
+</Link>
             </motion.div>
           </div>
         )}

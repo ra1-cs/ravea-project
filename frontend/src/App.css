@@ -1920,3 +1920,177 @@ button {
 .profile-grid select {
   cursor: pointer;
 }
+
+.clickable-product-image {
+  cursor: zoom-in;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.clickable-product-image:hover {
+  transform: scale(1.03);
+  filter: brightness(1.04);
+}
+
+.image-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  background: rgba(17, 13, 14, 0.78);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+
+.image-modal-content {
+  position: relative;
+  max-width: 720px;
+  width: min(92vw, 720px);
+  padding: 28px;
+  border-radius: 36px;
+  background: #fffaf8;
+  text-align: center;
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.34);
+}
+
+.image-modal-content img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 28px;
+}
+
+.image-modal-content h3 {
+  margin-top: 18px;
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: #23191b;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #f4c7d0;
+  color: #23191b;
+  font-size: 28px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.checkout-page {
+  min-height: 100vh;
+  padding: 70px 8%;
+  background: linear-gradient(135deg, #fff7f8, #f4c7d0);
+}
+
+.checkout-card {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 54px;
+  border-radius: 42px;
+  background: rgba(255, 250, 248, 0.92);
+  box-shadow: 0 34px 100px rgba(121, 64, 78, 0.18);
+}
+
+.checkout-card > span {
+  color: #b45b70;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.checkout-card h1 {
+  margin: 14px 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 54px;
+  color: #23191b;
+}
+
+.checkout-card p {
+  color: #725b62;
+  line-height: 1.7;
+}
+
+.checkout-items {
+  margin-top: 32px;
+  display: grid;
+  gap: 18px;
+}
+
+.checkout-item {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 28px;
+  background: #fff0f3;
+}
+
+.checkout-item img {
+  width: 92px;
+  height: 92px;
+  object-fit: cover;
+  border-radius: 22px;
+}
+
+.checkout-item h3 {
+  margin: 0 0 6px;
+  color: #23191b;
+}
+
+.checkout-item strong {
+  color: #b45b70;
+}
+
+.checkout-total {
+  margin-top: 30px;
+  padding: 24px;
+  border-radius: 28px;
+  background: #23191b;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkout-total span {
+  color: #f4c7d0;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.checkout-total strong {
+  font-size: 36px;
+}
+
+.checkout-actions {
+  margin-top: 28px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.checkout-actions a {
+  text-decoration: none;
+}
+
+.confirmation-card {
+  text-align: center;
+}
+
+.recommendation-tabs {
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+.recommendation-tabs button.active {
+  background: #23191b;
+  color: white;
+}

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ravea.Api.Data;
 
@@ -11,9 +12,11 @@ using Ravea.Api.Data;
 namespace Ravea.Api.Migrations
 {
     [DbContext(typeof(RaveaDbContext))]
-    partial class RaveaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260507010105_AddCartItems")]
+    partial class AddCartItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,63 +56,6 @@ namespace Ravea.Api.Migrations
                         .IsUnique();
 
                     b.ToTable("CartItems");
-                });
-
-            modelBuilder.Entity("Ravea.Api.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Ravea.Api.Models.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Ravea.Api.Models.Product", b =>
@@ -241,36 +187,6 @@ namespace Ravea.Api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ravea.Api.Models.Order", b =>
-                {
-                    b.HasOne("Ravea.Api.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Ravea.Api.Models.OrderItem", b =>
-                {
-                    b.HasOne("Ravea.Api.Models.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ravea.Api.Models.Product", "Product")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Ravea.Api.Models.ProductRating", b =>
                 {
                     b.HasOne("Ravea.Api.Models.Product", "Product")
@@ -290,23 +206,14 @@ namespace Ravea.Api.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ravea.Api.Models.Order", b =>
-                {
-                    b.Navigation("OrderItems");
-                });
-
             modelBuilder.Entity("Ravea.Api.Models.Product", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("Ravea.Api.Models.User", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("Orders");
 
                     b.Navigation("ProductRatings");
                 });

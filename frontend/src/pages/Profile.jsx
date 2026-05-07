@@ -112,11 +112,12 @@ function Profile() {
                   required
                 >
                   <option value="">Select skin type</option>
-                  <option>Dry skin</option>
-                  <option>Oily skin</option>
-                  <option>Combination skin</option>
-                  <option>Sensitive skin</option>
-                  <option>Normal skin</option>
+<option value="Dry">Dry</option>
+<option value="Oily">Oily</option>
+<option value="Combination">Combination</option>
+<option value="Normal">Normal</option>
+<option value="Sensitive">Sensitive</option>
+<option value="Mature">Mature</option>
                 </select>
               </div>
 
@@ -129,11 +130,11 @@ function Profile() {
                   required
                 >
                   <option value="">Select skin tone</option>
-                  <option>Fair</option>
-                  <option>Medium</option>
-                  <option>Olive</option>
-                  <option>Tan</option>
-                  <option>Deep</option>
+<option value="Light">Light</option>
+<option value="Medium">Medium</option>
+<option value="Tan">Tan</option>
+<option value="Deep">Deep</option>
+<option value="Fair">Fair</option>
                 </select>
               </div>
             </div>
