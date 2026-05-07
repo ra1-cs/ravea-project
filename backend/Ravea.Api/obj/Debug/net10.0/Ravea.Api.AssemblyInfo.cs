@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ravea.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+59cf8390681cefeb2a3a497af0e83bdd79e5f402")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+63bae22cae98349f2815dd0dcab67d11743e2ee6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ravea.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ravea.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

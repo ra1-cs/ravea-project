@@ -15,6 +15,13 @@ namespace Ravea.Api.Controllers
         public string? SkinTone { get; set; }
     }
 
+    public class UpdateProfileDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public string? SkinType { get; set; }
+        public string? SkinTone { get; set; }
+    }
+
     public class LoginDto
     {
         public string Email { get; set; } = string.Empty;
@@ -38,13 +45,13 @@ namespace Ravea.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly RaveaDbContext _context;
-private readonly EmailService _emailService;
+        private readonly EmailService _emailService;
 
-public AuthController(RaveaDbContext context, EmailService emailService)
-{
-    _context = context;
-    _emailService = emailService;
-}
+        public AuthController(RaveaDbContext context, EmailService emailService)
+        {
+            _context = context;
+            _emailService = emailService;
+        }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto request)
@@ -58,7 +65,8 @@ public AuthController(RaveaDbContext context, EmailService emailService)
 
             var email = request.Email.Trim().ToLower();
 
-            var emailExists = await _context.Users.AnyAsync(u => u.Email.ToLower() == email);
+            var emailExists = await _context.Users
+                .AnyAsync(u => u.Email.ToLower() == email);
 
             if (emailExists)
                 return BadRequest("Email already exists.");
@@ -73,6 +81,7 @@ public AuthController(RaveaDbContext context, EmailService emailService)
             };
 
             _context.Users.Add(user);
+
             await _context.SaveChangesAsync();
 
             return Ok(new
@@ -97,7 +106,10 @@ public AuthController(RaveaDbContext context, EmailService emailService)
             var email = request.Email.Trim().ToLower();
 
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email.ToLower() == email && u.Password == request.Password);
+                .FirstOrDefaultAsync(
+                    u => u.Email.ToLower() == email &&
+                    u.Password == request.Password
+                );
 
             if (user == null)
                 return Unauthorized("Invalid email or password.");
@@ -130,14 +142,18 @@ public AuthController(RaveaDbContext context, EmailService emailService)
 
             user.ResetCode = resetCode;
             user.ResetCodeExpiresAt = DateTime.Now.AddMinutes(10);
-                await _context.SaveChangesAsync(); 
 
-            await _emailService.SendPasswordResetCodeAsync(user.Email, resetCode);
+            await _context.SaveChangesAsync();
 
-return Ok(new
-{
-    message = "A reset code has been sent to your email."
-});
+            await _emailService.SendPasswordResetCodeAsync(
+                user.Email,
+                resetCode
+            );
+
+            return Ok(new
+            {
+                message = "A reset code has been sent to your email."
+            });
         }
 
         [HttpPost("reset-password")]
@@ -158,13 +174,16 @@ return Ok(new
             if (user == null)
                 return NotFound("No account found with this email.");
 
-           var submittedCode = request.ResetCode.Trim();
+            var submittedCode = request.ResetCode.Trim();
 
-if (user.ResetCode != submittedCode)
-    return BadRequest("Invalid reset code.");
+            if (user.ResetCode != submittedCode)
+                return BadRequest("Invalid reset code.");
 
-            if (user.ResetCodeExpiresAt == null || user.ResetCodeExpiresAt < DateTime.Now)
+            if (user.ResetCodeExpiresAt == null ||
+                user.ResetCodeExpiresAt < DateTime.Now)
+            {
                 return BadRequest("Reset code has expired.");
+            }
 
             user.Password = request.NewPassword;
             user.ResetCode = null;
@@ -173,6 +192,53 @@ if (user.ResetCode != submittedCode)
             await _context.SaveChangesAsync();
 
             return Ok("Password updated successfully.");
+        }
+
+        [HttpPut("users/{id}/profile")]
+        public async Task<IActionResult> UpdateProfile(
+            int id,
+            UpdateProfileDto request
+        )
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+                return NotFound("User not found.");
+
+            if (string.IsNullOrWhiteSpace(request.Name))
+                return BadRequest("Name is required.");
+
+            user.Name = request.Name.Trim();
+            user.SkinType = request.SkinType;
+            user.SkinTone = request.SkinTone;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                user.Id,
+                user.Name,
+                user.Email,
+                user.SkinType,
+                user.SkinTone
+            });
+        }
+
+        [HttpDelete("users/{id}")]
+        public async Task<IActionResult> DeleteAccount(int id)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+                return NotFound("User not found.");
+
+            _context.Users.Remove(user);
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Account deleted successfully.");
         }
     }
 }
