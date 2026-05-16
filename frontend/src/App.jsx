@@ -11,12 +11,19 @@ import Login from './pages/login'
 import Register from './pages/Register'
 import Recommendations from './pages/Recommendations'
 import './App.css'
+import ScrollToTop from './components/ScrollToTop'
+import Profile from './pages/Profile'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+import Checkout from './pages/Checkout'
+import OrderConfirmation from './pages/OrderConfirmation'
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <AppContent />
         </BrowserRouter>
       </CartProvider>
@@ -39,6 +46,11 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/recommendations" element={<Recommendations />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+<Route path="/reset-password" element={<ResetPassword />} />
+<Route path="/checkout" element={<Checkout />} />
+<Route path="/order-confirmation/:id" element={<OrderConfirmation />} />
       </Routes>
     </>
   )
