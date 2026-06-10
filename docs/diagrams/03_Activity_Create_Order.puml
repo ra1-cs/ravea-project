@@ -1,0 +1,37 @@
+@startuml
+title Activity Diagram - Create Order from Cart
+
+start
+
+:User confirms checkout;
+:Frontend sends POST /api/orders with UserId;
+
+:OrdersController receives CreateOrderDto;
+
+:Check if user exists;
+
+if (User exists?) then (No)
+  :Return error response;
+  stop
+else (Yes)
+  :Load CartItems for user;
+  :Include related Product data;
+endif
+
+if (Cart is empty?) then (Yes)
+  :Return BadRequest "Cart is empty";
+  stop
+else (No)
+  :Calculate TotalAmount = Sum(Product.Price * Quantity);
+  :Create Order;
+  :Set Status = "Confirmed";
+  :Set CreatedAt = current date/time;
+  :Create OrderItems from CartItems;
+  :Add Order to database;
+  :Remove CartItems from database;
+  :Save changes;
+  :Return order summary;
+endif
+
+stop
+@enduml
