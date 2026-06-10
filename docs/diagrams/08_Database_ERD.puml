@@ -1,0 +1,64 @@
+@startuml
+title Database ERD - RAVÉA
+
+hide circle
+skinparam linetype ortho
+
+entity "Users" as Users {
+  * Id : int <<PK>>
+  --
+  Name : string
+  Email : string
+  Password : string
+  SkinType : string
+  SkinTone : string
+  ResetCode : string
+  ResetCodeExpiresAt : DateTime
+}
+
+entity "Products" as Products {
+  * Id : int <<PK>>
+  --
+  Name : string
+  Price : decimal
+  Description : string
+  Category : string
+  ImageUrl : string
+  SkinType : string
+  SkinTone : string
+}
+
+entity "CartItems" as CartItems {
+  * Id : int <<PK>>
+  --
+  UserId : int <<FK>>
+  ProductId : int <<FK>>
+  Quantity : int
+}
+
+entity "Orders" as Orders {
+  * Id : int <<PK>>
+  --
+  UserId : int <<FK>>
+  TotalAmount : decimal
+  Status : string
+  CreatedAt : DateTime
+}
+
+entity "OrderItems" as OrderItems {
+  * Id : int <<PK>>
+  --
+  OrderId : int <<FK>>
+  ProductId : int <<FK>>
+  Quantity : int
+  UnitPrice : decimal
+}
+
+Users ||--o{ CartItems : has
+Products ||--o{ CartItems : added_to
+
+Users ||--o{ Orders : places
+Orders ||--o{ OrderItems : contains
+Products ||--o{ OrderItems : included_in
+
+@enduml
