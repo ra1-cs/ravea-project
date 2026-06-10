@@ -1,0 +1,46 @@
+@startuml
+title Detailed Use Case Diagram - Manage Profile and Get Recommendations
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Registered User" as User
+
+rectangle "RAVÉA System" {
+
+  usecase "Open Profile Page" as UC_OpenProfile
+  usecase "View Profile Information" as UC_ViewProfile
+  usecase "Edit Full Name" as UC_EditName
+  usecase "Modify Skin Type" as UC_ModifySkinType
+  usecase "Modify Skin Tone" as UC_ModifySkinTone
+  usecase "Save Profile Changes" as UC_SaveProfile
+  usecase "Validate Profile Data" as UC_ValidateProfile
+  usecase "Update User Profile" as UC_UpdateProfile
+  usecase "View Recommendations" as UC_ViewRecommendations
+  usecase "Generate Personalized Recommendations" as UC_GenerateRecommendations
+  usecase "Filter Products by Skin Type and Skin Tone" as UC_FilterRecommendations
+  usecase "Display Recommended Products" as UC_DisplayRecommendations
+  usecase "Display No Recommendations Message" as UC_NoRecommendations
+}
+
+User --> UC_OpenProfile
+User --> UC_EditName
+User --> UC_ModifySkinType
+User --> UC_ModifySkinTone
+User --> UC_SaveProfile
+User --> UC_ViewRecommendations
+
+UC_OpenProfile --> UC_ViewProfile : <<include>>
+UC_SaveProfile --> UC_ValidateProfile : <<include>>
+UC_SaveProfile --> UC_UpdateProfile : <<include>>
+
+UC_ViewRecommendations --> UC_GenerateRecommendations : <<include>>
+UC_GenerateRecommendations --> UC_FilterRecommendations : <<include>>
+UC_GenerateRecommendations --> UC_DisplayRecommendations : <<extend>>
+UC_GenerateRecommendations --> UC_NoRecommendations : <<extend>>
+
+UC_ModifySkinType --> UC_GenerateRecommendations : <<influences>>
+UC_ModifySkinTone --> UC_GenerateRecommendations : <<influences>>
+
+@enduml
