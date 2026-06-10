@@ -1,4 +1,6 @@
 @startuml
+title Use Case Diagram - RAVÉA Beauty E-Commerce System
+
 left to right direction
 skinparam packageStyle rectangle
 skinparam actorStyle awesome
@@ -7,34 +9,123 @@ actor "Guest User" as Guest
 actor "Registered User" as User
 
 rectangle "RAVÉA Beauty E-Commerce System" {
-  usecase "Browse Products" as UC_Browse
-  usecase "View Product Card" as UC_ProductCard
-  usecase "Register" as UC_Register
-  usecase "Login" as UC_Login
-  usecase "Forgot Password" as UC_Forgot
-  usecase "Reset Password" as UC_Reset
 
-  usecase "Update Profile" as UC_Profile
-  usecase "Delete Account" as UC_Delete
-  usecase "Add Product to Cart" as UC_AddCart
-  usecase "Create Order from Cart" as UC_CreateOrder
-  usecase "View Order Summary" as UC_OrderSummary
+  package "Authentication & Account" {
+    usecase "Register" as UC_Register
+    usecase "Login" as UC_Login
+    usecase "Logout" as UC_Logout
+    usecase "Forgot Password" as UC_Forgot
+    usecase "Reset Password\nwith Email Code" as UC_Reset
+    usecase "View Profile" as UC_ViewProfile
+    usecase "Update Profile" as UC_UpdateProfile
+    usecase "Delete Account" as UC_DeleteAccount
+  }
+
+  package "Product Browsing" {
+    usecase "View Home Page" as UC_Home
+    usecase "Browse Products" as UC_Browse
+    usecase "View Product Details" as UC_ProductDetails
+    usecase "View Product Images" as UC_ProductImages
+    usecase "Search Products" as UC_Search
+    usecase "Filter by Category" as UC_FilterCategory
+    usecase "Sort Products\nby Default, Price, Top Rated" as UC_Sort
+    usecase "View Product Rating" as UC_ViewRating
+    usecase "Rate Product" as UC_Rate
+  }
+
+  package "Shopping Cart" {
+    usecase "Add Product to Cart" as UC_AddCart
+    usecase "View Cart" as UC_ViewCart
+    usecase "Update Product Quantity" as UC_UpdateQty
+    usecase "Remove Product from Cart" as UC_RemoveCart
+    usecase "View Cart Total" as UC_CartTotal
+  }
+
+  package "Order Management" {
+    usecase "Place Order" as UC_PlaceOrder
+    usecase "View Order Summary" as UC_OrderSummary
+    usecase "Receive Order Confirmation" as UC_OrderConfirmation
+  }
+
+  package "Personalized Recommendations" {
+    usecase "Enter Skin Type" as UC_SkinType
+    usecase "Enter Skin Tone" as UC_SkinTone
+    usecase "View Recommended Products" as UC_Recommendations
+    usecase "Modify Skin Type" as UC_ModifySkinType
+    usecase "Modify Skin Tone" as UC_ModifySkinTone
+    usecase "Get New Recommendation Suggestions" as UC_NewSuggestions
+  }
 }
 
+Guest --> UC_Home
 Guest --> UC_Browse
-Guest --> UC_ProductCard
+Guest --> UC_ProductDetails
+Guest --> UC_ProductImages
+Guest --> UC_Search
+Guest --> UC_FilterCategory
+Guest --> UC_Sort
+Guest --> UC_ViewRating
 Guest --> UC_Register
 Guest --> UC_Login
 Guest --> UC_Forgot
 Guest --> UC_Reset
 
-User --> UC_Profile
-User --> UC_Delete
-User --> UC_AddCart
-User --> UC_CreateOrder
-User --> UC_OrderSummary
+User --> UC_Logout
+User --> UC_ViewProfile
+User --> UC_UpdateProfile
+User --> UC_DeleteAccount
 
-UC_Forgot --> UC_Reset : <<includes>>
-UC_CreateOrder --> UC_OrderSummary : <<produces>>
+User --> UC_Home
+User --> UC_Browse
+User --> UC_ProductDetails
+User --> UC_ProductImages
+User --> UC_Search
+User --> UC_FilterCategory
+User --> UC_Sort
+User --> UC_ViewRating
+User --> UC_Rate
+
+User --> UC_AddCart
+User --> UC_ViewCart
+User --> UC_UpdateQty
+User --> UC_RemoveCart
+User --> UC_CartTotal
+
+User --> UC_PlaceOrder
+User --> UC_OrderSummary
+User --> UC_OrderConfirmation
+
+User --> UC_SkinType
+User --> UC_SkinTone
+User --> UC_Recommendations
+User --> UC_ModifySkinType
+User --> UC_ModifySkinTone
+User --> UC_NewSuggestions
+
+UC_Forgot --> UC_Reset : <<include>>
+
+UC_Register --> UC_SkinType : <<include>>
+UC_Register --> UC_SkinTone : <<include>>
+
+UC_UpdateProfile --> UC_ModifySkinType : <<include>>
+UC_UpdateProfile --> UC_ModifySkinTone : <<include>>
+UC_ModifySkinType --> UC_NewSuggestions : <<extend>>
+UC_ModifySkinTone --> UC_NewSuggestions : <<extend>>
+
+UC_SkinType --> UC_Recommendations : <<include>>
+UC_SkinTone --> UC_Recommendations : <<include>>
+
+UC_Browse --> UC_Search : <<extend>>
+UC_Browse --> UC_FilterCategory : <<extend>>
+UC_Browse --> UC_Sort : <<extend>>
+
+UC_ProductDetails --> UC_ProductImages : <<include>>
+UC_ProductDetails --> UC_ViewRating : <<include>>
+UC_Rate --> UC_Login : <<requires>>
+
+UC_PlaceOrder --> UC_ViewCart : <<include>>
+UC_PlaceOrder --> UC_CartTotal : <<include>>
+UC_PlaceOrder --> UC_OrderSummary : <<include>>
+UC_PlaceOrder --> UC_OrderConfirmation : <<extend>>
 
 @enduml
