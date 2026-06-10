@@ -1,0 +1,56 @@
+@startuml
+title Detailed Use Case Diagram - Create Order from Cart
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Registered User" as User
+
+rectangle "RAVÉA System" {
+
+  usecase "Browse Products" as UC_Browse
+  usecase "View Product Details" as UC_ViewDetails
+  usecase "Add Product to Cart" as UC_AddCart
+  usecase "Open Cart" as UC_OpenCart
+  usecase "View Cart Items" as UC_ViewCart
+  usecase "Update Product Quantity" as UC_UpdateQuantity
+  usecase "Remove Product from Cart" as UC_RemoveProduct
+  usecase "Calculate Cart Total" as UC_CalculateTotal
+  usecase "Confirm Checkout" as UC_ConfirmCheckout
+  usecase "Validate User" as UC_ValidateUser
+  usecase "Validate Cart Items" as UC_ValidateCart
+  usecase "Create Order" as UC_CreateOrder
+  usecase "Create Order Items" as UC_CreateOrderItems
+  usecase "Clear Cart" as UC_ClearCart
+  usecase "Display Order Summary" as UC_OrderSummary
+  usecase "Display Order Confirmation" as UC_OrderConfirmation
+}
+
+User --> UC_Browse
+User --> UC_ViewDetails
+User --> UC_AddCart
+User --> UC_OpenCart
+User --> UC_UpdateQuantity
+User --> UC_RemoveProduct
+User --> UC_ConfirmCheckout
+
+UC_Browse --> UC_ViewDetails : <<include>>
+UC_ViewDetails --> UC_AddCart : <<extend>>
+
+UC_OpenCart --> UC_ViewCart : <<include>>
+UC_OpenCart --> UC_CalculateTotal : <<include>>
+UC_UpdateQuantity --> UC_CalculateTotal : <<include>>
+UC_RemoveProduct --> UC_CalculateTotal : <<include>>
+
+UC_ConfirmCheckout --> UC_ValidateUser : <<include>>
+UC_ConfirmCheckout --> UC_ValidateCart : <<include>>
+UC_ConfirmCheckout --> UC_CalculateTotal : <<include>>
+UC_ConfirmCheckout --> UC_CreateOrder : <<include>>
+
+UC_CreateOrder --> UC_CreateOrderItems : <<include>>
+UC_CreateOrder --> UC_ClearCart : <<include>>
+UC_CreateOrder --> UC_OrderSummary : <<include>>
+UC_OrderSummary --> UC_OrderConfirmation : <<extend>>
+
+@enduml
