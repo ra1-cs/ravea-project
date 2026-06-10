@@ -1,0 +1,36 @@
+@startuml
+title State Diagram - Reset Code Lifecycle
+
+[*] --> NoResetCode
+
+NoResetCode --> ResetCodeGenerated : forgot-password request
+ResetCodeGenerated --> ResetCodeUsed : valid code + new password
+ResetCodeGenerated --> ResetCodeExpired : current time > expiry time
+ResetCodeExpired --> ResetCodeGenerated : new forgot-password request
+ResetCodeUsed --> NoResetCode : reset code cleared
+ResetCodeExpired --> NoResetCode : reset code cleared or ignored
+
+state NoResetCode {
+  [*] --> Empty
+  Empty : ResetCode = null
+  Empty : ResetCodeExpiresAt = null
+}
+
+state ResetCodeGenerated {
+  [*] --> Active
+  Active : ResetCode is stored
+  Active : Expiration time = Now + 10 minutes
+}
+
+state ResetCodeUsed {
+  [*] --> PasswordUpdated
+  PasswordUpdated : Password changed
+  PasswordUpdated : ResetCode cleared
+}
+
+state ResetCodeExpired {
+  [*] --> Invalid
+  Invalid : Code cannot be used
+}
+
+@enduml
