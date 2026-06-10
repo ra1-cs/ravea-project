@@ -1,0 +1,40 @@
+@startuml
+title Sequence Diagram - Create Order from Cart
+
+actor "Registered User" as User
+participant "React Frontend" as Frontend
+participant "OrdersController" as Orders
+participant "RaveaDbContext" as DB
+database "Relational Database" as Database
+
+User -> Frontend : Confirm checkout
+Frontend -> Orders : POST /api/orders { UserId }
+
+Orders -> DB : Check user exists
+DB -> Database : Query Users
+Database --> DB : User result
+DB --> Orders : User exists
+
+Orders -> DB : Load CartItems including Product
+DB -> Database : Query CartItems + Products
+Database --> DB : Cart items with product data
+DB --> Orders : CartItems list
+
+alt Cart is empty
+  Orders --> Frontend : BadRequest
+  Frontend --> User : Show error
+else Cart contains items
+  Orders -> Orders : Calculate total amount
+  Orders -> Orders : Create Order with Status = "Confirmed"
+  Orders -> Orders : Create OrderItems
+  Orders -> DB : Add Order
+  Orders -> DB : Remove CartItems
+  Orders -> DB : SaveChangesAsync
+  DB -> Database : Insert Order and OrderItems / Delete CartItems
+  Database --> DB : Saved
+  DB --> Orders : Success
+  Orders --> Frontend : Order summary
+  Frontend --> User : Display order confirmation
+end
+
+@enduml
