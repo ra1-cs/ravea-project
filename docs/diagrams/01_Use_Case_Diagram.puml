@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Guest User" as Guest
+actor "Registered User" as User
+
+rectangle "RAVÉA Beauty E-Commerce System" {
+  usecase "Browse Products" as UC_Browse
+  usecase "View Product Card" as UC_ProductCard
+  usecase "Register" as UC_Register
+  usecase "Login" as UC_Login
+  usecase "Forgot Password" as UC_Forgot
+  usecase "Reset Password" as UC_Reset
+
+  usecase "Update Profile" as UC_Profile
+  usecase "Delete Account" as UC_Delete
+  usecase "Add Product to Cart" as UC_AddCart
+  usecase "Create Order from Cart" as UC_CreateOrder
+  usecase "View Order Summary" as UC_OrderSummary
+}
+
+Guest --> UC_Browse
+Guest --> UC_ProductCard
+Guest --> UC_Register
+Guest --> UC_Login
+Guest --> UC_Forgot
+Guest --> UC_Reset
+
+User --> UC_Profile
+User --> UC_Delete
+User --> UC_AddCart
+User --> UC_CreateOrder
+User --> UC_OrderSummary
+
+UC_Forgot --> UC_Reset : <<includes>>
+UC_CreateOrder --> UC_OrderSummary : <<produces>>
+
+@enduml
