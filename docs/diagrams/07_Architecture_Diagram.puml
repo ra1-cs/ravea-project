@@ -1,0 +1,43 @@
+@startuml
+title Architecture Diagram - RAVÉA
+
+skinparam componentStyle rectangle
+
+actor "User" as User
+
+package "Frontend Layer" {
+  component "React SPA" as React
+  component "ProductCard Component" as ProductCard
+  component "useCart Context" as UseCart
+}
+
+package "Backend/API Layer" {
+  component "ASP.NET Core Web API" as API
+  component "AuthController" as Auth
+  component "OrdersController" as Orders
+  component "EmailService" as EmailService
+}
+
+package "Data Layer" {
+  component "Entity Framework Core\nRaveaDbContext" as EF
+  database "Relational Database" as DB
+}
+
+cloud "Email Provider / SMTP" as SMTP
+
+User --> React : uses website
+React --> ProductCard : displays products
+ProductCard --> UseCart : addToCart(product)
+
+React --> API : HTTP/JSON requests
+API --> Auth : authentication/profile/password endpoints
+API --> Orders : order endpoints
+
+Auth --> EF : query/update Users
+Orders --> EF : query CartItems, Products, Orders
+EF --> DB : persistence
+
+Auth --> EmailService : send reset code
+EmailService --> SMTP : email delivery
+
+@enduml
