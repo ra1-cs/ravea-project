@@ -1,0 +1,34 @@
+@startuml
+title Activity Diagram - Personalized Recommendations
+
+start
+
+:User opens Recommendations page;
+
+if (User is logged in?) then (No)
+  :Display general recommendation page;
+  :Ask user to login or create account;
+  stop
+else (Yes)
+  :Load user profile;
+  :Read Skin Type and Skin Tone;
+endif
+
+if (Skin Type or Skin Tone missing?) then (Yes)
+  :Display "No recommendations found";
+  :Ask user to update profile;
+  stop
+else (No)
+  :Filter products by Skin Type and Skin Tone;
+  :Filter by selected category if needed;
+  :Display recommended products;
+endif
+
+if (User changes category filter?) then (Yes)
+  :Update recommendation results;
+else (No)
+  :Keep current recommendations;
+endif
+
+stop
+@enduml
